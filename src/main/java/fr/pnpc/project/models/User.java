@@ -1,0 +1,89 @@
+package fr.pnpc.project.models;
+
+import fr.pnpc.project.models.validation.PhoneNumber;
+import fr.pnpc.project.models.validation.PhoneNumberValidator;
+import lombok.Data;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.Collection;
+
+/**
+ * Created by stephen on 25/10/17.
+ */
+
+@Entity
+@Table(name = "T_USER")
+@Data
+public class User {
+
+    @Id
+    @GeneratedValue
+    private long id;
+
+    @NotNull(message = "Nickname should not be null.")
+    @Length(min = 5, message = "Nickname must have 5 characters.")
+    private String nickname;
+
+    @NotNull(message = "Email should not be null.")
+    @Email(message = "Email not valid.")
+    private String email;
+
+    @NotNull(message = "Phone number should not be null.")
+    @PhoneNumber(message = "Phone number should follow this pattern: " + PhoneNumberValidator.regex)
+    private String phoneNumber;
+
+    @NotNull(message = "Password should not be null.")
+    @Length(min = 8, message = "Password must have 8 characters.")
+    private String password;
+
+    @NotNull(message = "Passage collections should not be null")
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    private Collection<Passage> passages;
+
+    public User() {
+        this.passages = new ArrayList<>();
+    }
+
+    private User(Builder builder) {
+        this.nickname = builder.nickname;
+        this.email = builder.email;
+        this.phoneNumber = builder.phoneNumber;
+        this.password = builder.password;
+        this.passages = new ArrayList<>();
+    }
+
+    public static class Builder {
+        private String nickname;
+        private String email;
+        private String phoneNumber;
+        private String password;
+
+        public User build() {
+            return new User(this);
+        }
+
+        public Builder setNickname(String nickname) {
+            this.nickname = nickname;
+            return this;
+        }
+
+        public Builder setEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder setPhoneNumber(String phoneNumber) {
+            this.phoneNumber = phoneNumber;
+            return this;
+        }
+
+        public Builder setPassword(String password) {
+            this.password = password;
+            return this;
+        }
+    }
+}

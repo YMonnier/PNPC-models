@@ -1,12 +1,14 @@
 package fr.pnpc.project.models;
 
 import org.junit.jupiter.api.*;
+import org.junit.runners.Suite;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Unit test for simple App.
  */
+
 public class AppTest {
 
     @BeforeAll
@@ -17,25 +19,13 @@ public class AppTest {
     void init() {
     }
 
-    @Test
-    void succeedingTest() {
-        Assertions.assertTrue(true);
-    }
-
-
-    /*@Test
-    void failingTest() {
-        fail("a failing test");
-    }*/
-
-    @Test
-    @Disabled("for demonstration purposes")
-    void skippedTest() {
-        // not executed
-    }
-
     @AfterEach
     void tearDown() {
+    }
+
+    @Test
+    void superTest() {
+        Assertions.assertEquals(true, true);
     }
 
     @AfterAll

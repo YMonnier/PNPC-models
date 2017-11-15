@@ -1,9 +1,8 @@
-package fr.pnpc.project.models;
+package fr.pnpc.project.models.model;
 
 import fr.pnpc.project.models.validation.Latitude;
 import fr.pnpc.project.models.validation.Longitude;
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

@@ -1,4 +1,4 @@
-package fr.pnpc.project.models;
+package fr.pnpc.project.models.model;
 
 import fr.pnpc.project.models.validation.PhoneNumber;
 import fr.pnpc.project.models.validation.PhoneNumberValidator;
@@ -17,6 +17,9 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "T_USER")
+@NamedQueries({
+        @NamedQuery(name = "GET_BY_NICKNAME", query = "SELECT u FROM User u WHERE u.nickname = :nickname")
+})
 @Data
 public class User {
 

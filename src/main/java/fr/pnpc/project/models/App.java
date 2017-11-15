@@ -1,5 +1,6 @@
 package fr.pnpc.project.models;
 
+import fr.pnpc.project.models.model.User;
 import org.apache.log4j.PatternLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,9 +19,24 @@ public class App {
     //Set the logger with the real class name.
     private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
+    public App(String[] args) {
+    }
+
     public static void main(String[] args) {
         logger.info("App started.");
         logger.debug("About to talk :");
         System.out.println("Hello world !");
+
+        App app = new App(args);
+        app.test();
+    }
+
+    private void test() {
+        User user = new User.Builder()
+                .setEmail("ysee@test.com")
+                .setNickname("Wow.....")
+                .setPassword("ZEDZGGHSJR")
+                .setPhoneNumber("0651576906")
+                .build();
     }
 }

@@ -1,5 +1,6 @@
 package fr.pnpc.project.models;
 
+import fr.pnpc.project.models.model.User;
 import fr.pnpc.project.models.validation.PhoneNumberValidator;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Test;

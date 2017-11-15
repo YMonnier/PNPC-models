@@ -1,7 +1,7 @@
 package fr.pnpc.project.models;
 
+import fr.pnpc.project.models.model.Waypoint;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.validation.ConstraintViolation;

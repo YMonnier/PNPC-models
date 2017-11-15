@@ -1,4 +1,4 @@
-package fr.pnpc.project.models;
+package fr.pnpc.project.models.model;
 
 import lombok.Data;
 

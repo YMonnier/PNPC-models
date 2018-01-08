@@ -6,7 +6,7 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.util.Set;
 
-public abstract class ValidatorManager<T> {
+public class ValidatorManager<T> implements fr.pnpc.project.models.util.Validator<T> {
     protected Validator validator;
 
     public ValidatorManager() {
@@ -14,7 +14,8 @@ public abstract class ValidatorManager<T> {
         this.validator = factory.getValidator();
     }
 
-    protected Set<ConstraintViolation<T>> constraintViolations(T object) {
+
+    public Set<ConstraintViolation<T>> constraintViolations(T object) {
         return validator.validate(object);
     }
 }

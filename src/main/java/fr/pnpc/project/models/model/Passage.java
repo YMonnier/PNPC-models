@@ -2,10 +2,7 @@ package fr.pnpc.project.models.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -14,8 +11,16 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "T_PASSAGE")
+@NamedQueries({
+        @NamedQuery(name = Passage.FIND_BY_USER_ID, query = "SELECT p FROM Passage p WHERE p.user.id = :id"),
+        @NamedQuery(name = Passage.FIND_BY_ID, query = "SELECT p FROM Passage p WHERE p.id = :passageId AND p.user.id = :userId")
+})
+
 @Data
 public class Passage {
+
+    public final static String FIND_BY_USER_ID = "FIND_PASSAGES_BY_USER_ID";
+    public final static String FIND_BY_ID = "FIND_PASSAGES_BY_ID";
 
     @Id
     @GeneratedValue

@@ -1,7 +1,6 @@
 package fr.pnpc.project.models.dao;
 
 import javax.ejb.Local;
-import javax.ejb.Remote;
 import java.util.List;
 import java.util.Map;
 

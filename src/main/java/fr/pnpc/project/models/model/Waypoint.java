@@ -13,9 +13,12 @@ import java.util.Collection;
 @Table(name = "T_WAYPOINT")
 @Data
 public class Waypoint {
+
     @Id
     @GeneratedValue
     private long id;
+
+    private String beaconId;
 
     @NotNull(message = "Latitude should not be null.")
     @Latitude
@@ -26,10 +29,11 @@ public class Waypoint {
     private Long longitude;
 
     @NotNull(message = "Passage collections should not be null")
-    @ManyToMany(mappedBy = "users", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "waypoint", cascade = CascadeType.PERSIST)
     private Collection<Passage> passages;
 
     public Waypoint() {
+
     }
 
     private Waypoint(Builder builder) {

@@ -18,10 +18,14 @@ import java.util.Collection;
 @Entity
 @Table(name = "T_USER")
 @NamedQueries({
-        @NamedQuery(name = "GET_BY_NICKNAME", query = "SELECT u FROM User u WHERE u.nickname = :nickname")
+        @NamedQuery(name = User.FIND_BY_NICKNAME, query = "SELECT u FROM User u WHERE u.nickname = :nickname"),
+        @NamedQuery(name = User.FIND_ALL, query = "SELECT u FROM User u")
 })
 @Data
 public class User {
+
+    public static final String FIND_BY_NICKNAME = "User.findByNickname";
+    public static final String FIND_ALL = "User.findAll";
 
     @Id
     @GeneratedValue
@@ -43,8 +47,11 @@ public class User {
     @Length(min = 8, message = "Password must have 8 characters.")
     private String password;
 
+    private String authToken;
+    private String deviceToken;
+
     @NotNull(message = "Passage collections should not be null")
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "user")
     private Collection<Passage> passages;
 
     public User() {

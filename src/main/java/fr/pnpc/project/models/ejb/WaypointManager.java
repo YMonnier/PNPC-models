@@ -1,14 +1,16 @@
 package fr.pnpc.project.models.ejb;
 
-import fr.pnpc.project.models.model.Waypoint;
 import fr.pnpc.project.models.dao.CrudService;
 import fr.pnpc.project.models.exceptions.NotValidException;
 import fr.pnpc.project.models.exceptions.NullObjectException;
+import fr.pnpc.project.models.model.Waypoint;
 import fr.pnpc.project.models.util.ValidatorManager;
 
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.validation.ConstraintViolation;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -18,14 +20,17 @@ import java.util.Set;
  */
 
 @Stateless
-public class WaypointManager extends ValidatorManager<Waypoint>{
+@Transactional
+public class WaypointManager  extends ValidatorManager<Waypoint> implements Serializable {
 
-    @EJB
+    @Inject
     CrudService<Waypoint> serviceManager;
 
-    public WaypointManager(){
+    public WaypointManager() {
         super();
     }
+
+    @Transactional(rollbackOn = {NullObjectException.class, NotValidException.class})
 
     public Waypoint create(Waypoint waypoint) throws NullObjectException, NotValidException {
         if (waypoint == null) {
@@ -41,20 +46,21 @@ public class WaypointManager extends ValidatorManager<Waypoint>{
         return serviceManager.create(waypoint);
     }
 
-    public List getAll(){
+    public List getAll() {
         return serviceManager.findAll(Waypoint.class);
     }
 
-    public Waypoint getById(int id){
+    public Waypoint getById(int id) {
         return serviceManager.find(Waypoint.class, id);
     }
 
-    public void delete(int id){
+    public void delete(int id) {
         serviceManager.delete(Waypoint.class, id);
     }
 
+    @Transactional(rollbackOn = {NullObjectException.class, NotValidException.class})
     public Waypoint update(Waypoint newWaypoint) throws NullObjectException, NotValidException {
-        if(newWaypoint == null){
+        if (newWaypoint == null) {
             throw new NullObjectException(NullObjectException.defaultMessage);
         }
         Set<ConstraintViolation<Waypoint>> constraintViolations = constraintViolations(newWaypoint);
@@ -66,5 +72,4 @@ public class WaypointManager extends ValidatorManager<Waypoint>{
 
         return serviceManager.update(newWaypoint);
     }
-
 }

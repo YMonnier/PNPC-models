@@ -15,7 +15,7 @@ import java.util.Set;
 @Stateless
 public class CrudServiceBean<T> implements CrudService<T> {
 
-    @PersistenceContext()
+    @PersistenceContext(unitName = "pnpc_db_unit")
     EntityManager em;
 
     public CrudServiceBean() {
@@ -88,5 +88,4 @@ public class CrudServiceBean<T> implements CrudService<T> {
         TypedQuery<T> allQuery = em.createQuery(all);
         return allQuery.getResultList();
     }
-
 }

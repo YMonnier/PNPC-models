@@ -56,10 +56,6 @@ public class User {
 
     public User() {
         this.passages = new ArrayList<>();
-        this.nickname = "Empty nickname";
-        this.mdp = "abcdabcd123";
-        this.phoneNumber = "1213121314";
-        this.email = "default@default.com";
     }
 
     private User(Builder builder) {

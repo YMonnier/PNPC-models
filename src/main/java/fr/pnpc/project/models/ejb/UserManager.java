@@ -29,7 +29,7 @@ public class UserManager extends ValidatorManager<User> implements Serializable 
     }
 
     @Transactional(rollbackOn = {Exception.class})
-    public User register(User user) throws Exception {
+    public User register(User user) throws ObjectNotValidException {
         if (user == null) {
             throw new ObjectNotValidException(ErrorMessages.NULL_OBJECT);
         }

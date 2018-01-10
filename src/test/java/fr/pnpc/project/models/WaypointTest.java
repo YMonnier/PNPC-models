@@ -17,12 +17,12 @@ public class WaypointTest {
     private static Validator validator;
 
     /// Valid Waypoint Coords.
-    private final long[][] VALID_POINTS = new long[][]{
-            {(long) 12.1, (long) 23.1}
+    private final Double[][] VALID_POINTS = new Double[][]{
+            {12.1, 23.1}
     };
     /// Unvalid Waypoint Coords.
-    private final long[][] UNVALID_POINTS = new long[][]{
-            {(long) 123550.2342, (long) 12334234.5435}
+    private final Double[][] UNVALID_POINTS = new Double[][]{
+            {123550.2342, 12334234.5435}
     };
 
     @BeforeAll
@@ -34,7 +34,7 @@ public class WaypointTest {
     @Test
     void pointsValidTest() {
         Waypoint waypoint = null;
-        for (long[] vp : VALID_POINTS) {
+        for (Double[] vp : VALID_POINTS) {
             waypoint = new Waypoint.Builder()
                     .setLatitude(vp[0])
                     .setLongitude(vp[1])
@@ -50,7 +50,7 @@ public class WaypointTest {
     @Test
     void pointsUnvalidTest() {
         Waypoint waypoint = null;
-        for (long[] vp : UNVALID_POINTS) {
+        for (Double[] vp : UNVALID_POINTS) {
              waypoint = new Waypoint.Builder()
                     .setLatitude(vp[0])
                     .setLongitude(vp[1])

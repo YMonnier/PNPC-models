@@ -22,11 +22,11 @@ public class Waypoint {
 
     @NotNull(message = "Latitude should not be null.")
     @Latitude
-    private Long latitude;
+    private Double latitude;
 
     @NotNull(message = "Longitude should not be null.")
     @Longitude
-    private Long longitude;
+    private Double longitude;
 
     @OneToMany(mappedBy = "waypoint", cascade = CascadeType.PERSIST)
     private Collection<Passage> passages;
@@ -42,29 +42,19 @@ public class Waypoint {
     }
 
     public static class Builder {
-        private Long latitude;
-        private Long longitude;
+        private Double latitude;
+        private Double longitude;
 
         public Waypoint build() {
             return new Waypoint(this);
         }
 
-        public Builder setLatitude(long latitude) {
+        public Builder setLatitude(Double latitude) {
             this.latitude = latitude;
             return this;
         }
 
-        public Builder setLongitude(long longitude) {
-            this.longitude = longitude;
-            return this;
-        }
-
-        public Builder setLatitude(Long latitude) {
-            this.latitude = latitude;
-            return this;
-        }
-
-        public Builder setLongitude(Long longitude) {
+        public Builder setLongitude(Double longitude) {
             this.longitude = longitude;
             return this;
         }

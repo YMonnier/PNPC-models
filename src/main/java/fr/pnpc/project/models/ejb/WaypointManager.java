@@ -32,7 +32,6 @@ public class WaypointManager extends ValidatorManager<Waypoint> implements Seria
     }
 
     @Transactional(rollbackOn = {ObjectNotValidException.class})
-
     public Waypoint create(Waypoint waypoint) throws ObjectNotValidException {
         if (waypoint == null) {
             throw new ObjectNotValidException(ErrorMessages.NULL_OBJECT);
@@ -51,7 +50,7 @@ public class WaypointManager extends ValidatorManager<Waypoint> implements Seria
         return serviceManager.findAll(Waypoint.class);
     }
 
-    public Waypoint getById(int id) throws NotFoundException {
+    public Waypoint getById(long id) throws NotFoundException {
         Waypoint w = serviceManager.find(Waypoint.class, id);
         if (w == null) {
             throw new NotFoundException("Waypoint " + id);
@@ -59,7 +58,7 @@ public class WaypointManager extends ValidatorManager<Waypoint> implements Seria
         return w;
     }
 
-    public void delete(int id) throws NotFoundException {
+    public void delete(long id) throws NotFoundException {
         getById(id);
         serviceManager.delete(Waypoint.class, id);
     }

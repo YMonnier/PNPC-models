@@ -45,7 +45,7 @@ public class PassageManager extends ValidatorManager<Passage> implements Seriali
     }
 
     @Transactional(rollbackOn = {NotFoundException.class})
-    public List getPassagesByUserId(int id) throws NotFoundException {
+    public List getPassagesByUserId(long id) throws NotFoundException {
         List<Passage> passages = serviceManager.findWithNamedQuery(Passage.FIND_BY_USER_ID, QueryParameter.with("id", id).parameters());
 
         if (passages == null) {
@@ -56,7 +56,7 @@ public class PassageManager extends ValidatorManager<Passage> implements Seriali
     }
 
     @Transactional(rollbackOn = {NotFoundException.class})
-    public Passage getPassage(int userId, int passageId) throws NotFoundException {
+    public Passage getPassage(long userId, long passageId) throws NotFoundException {
         List<Passage> passages = serviceManager.findWithNamedQuery(Passage.FIND_BY_ID, QueryParameter.with("passageId", passageId).and("userId", userId).parameters());
 
         if (passages == null) {

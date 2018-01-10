@@ -28,12 +28,11 @@ public class Waypoint {
     @Longitude
     private Long longitude;
 
-    @NotNull(message = "Passage collections should not be null")
     @OneToMany(mappedBy = "waypoint", cascade = CascadeType.PERSIST)
     private Collection<Passage> passages;
 
     public Waypoint() {
-
+        this.passages = new ArrayList<>();
     }
 
     private Waypoint(Builder builder) {

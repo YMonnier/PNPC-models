@@ -1,9 +1,9 @@
 package fr.pnpc.project.models.ejb;
 
 import fr.pnpc.project.models.dao.CrudService;
-import fr.pnpc.project.models.exceptions.NotValidException;
-import fr.pnpc.project.models.exceptions.NullObjectException;
+import fr.pnpc.project.models.exceptions.ObjectNotValidException;
 import fr.pnpc.project.models.model.Waypoint;
+import fr.pnpc.project.models.util.ErrorMessages;
 import fr.pnpc.project.models.util.ValidatorManager;
 
 import javax.ejb.Stateless;
@@ -21,7 +21,7 @@ import java.util.Set;
 
 @Stateless
 @Transactional
-public class WaypointManager  extends ValidatorManager<Waypoint> implements Serializable {
+public class WaypointManager extends ValidatorManager<Waypoint> implements Serializable {
 
     @Inject
     CrudService<Waypoint> serviceManager;
@@ -30,17 +30,17 @@ public class WaypointManager  extends ValidatorManager<Waypoint> implements Seri
         super();
     }
 
-    @Transactional(rollbackOn = {NullObjectException.class, NotValidException.class})
+    @Transactional(rollbackOn = {ObjectNotValidException.class})
 
-    public Waypoint create(Waypoint waypoint) throws NullObjectException, NotValidException {
+    public Waypoint create(Waypoint waypoint) throws ObjectNotValidException {
         if (waypoint == null) {
-            throw new NullObjectException(NullObjectException.defaultMessage);
+            throw new ObjectNotValidException(ErrorMessages.NULL_OBJECT);
         }
         Set<ConstraintViolation<Waypoint>> constraintViolations = constraintViolations(waypoint);
         if (constraintViolations.size() > 0) {
             List<String> errors = new ArrayList<>();
             constraintViolations.forEach(ucv -> errors.add(ucv.getMessage()));
-            throw new NotValidException(errors);
+            throw new ObjectNotValidException(errors);
         }
 
         return serviceManager.create(waypoint);
@@ -58,16 +58,16 @@ public class WaypointManager  extends ValidatorManager<Waypoint> implements Seri
         serviceManager.delete(Waypoint.class, id);
     }
 
-    @Transactional(rollbackOn = {NullObjectException.class, NotValidException.class})
-    public Waypoint update(Waypoint newWaypoint) throws NullObjectException, NotValidException {
+    @Transactional(rollbackOn = {ObjectNotValidException.class})
+    public Waypoint update(Waypoint newWaypoint) throws ObjectNotValidException {
         if (newWaypoint == null) {
-            throw new NullObjectException(NullObjectException.defaultMessage);
+            throw new ObjectNotValidException(ErrorMessages.NULL_OBJECT);
         }
         Set<ConstraintViolation<Waypoint>> constraintViolations = constraintViolations(newWaypoint);
         if (constraintViolations.size() > 0) {
             List<String> errors = new ArrayList<>();
             constraintViolations.forEach(ucv -> errors.add(ucv.getMessage()));
-            throw new NotValidException(errors);
+            throw new ObjectNotValidException(errors);
         }
 
         return serviceManager.update(newWaypoint);

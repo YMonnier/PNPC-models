@@ -36,14 +36,14 @@ public class UserManager extends ValidatorManager<User> implements Serializable 
         if (constraintViolations.size() > 0) {
             List<String> errors = new ArrayList<>();
             constraintViolations.forEach(ucv -> errors.add(ucv.getMessage()));
-            throw new NotValidException(errors);
+            throw new ObjectNotValidException(errors);
         }
 
         return serviceManager.create(user);
     }
 
-    @Transactional(rollbackOn = {NotValidEmailException.class, NotValidPassword.class, UserNotExistException.class})
-    public User login(String nickname, String password) throws NotValidEmailException, NotValidPassword, UserNotExistException {
+    @Transactional(rollbackOn = {ObjectNotValidException.class, NotFoundException.class})
+    public User login(String nickname, String password) throws ObjectNotValidException, NotFoundException {
         User user = new User.Builder()
                 .setNickname(nickname)
                 .setPassword(password)
@@ -51,16 +51,16 @@ public class UserManager extends ValidatorManager<User> implements Serializable 
         Set<ConstraintViolation<User>> constraintNicknameViolations = validator.validateProperty(user, "email");
         Set<ConstraintViolation<User>> constraintPasswordViolations = validator.validateProperty(user, "password");
         if (constraintNicknameViolations.size() > 0) {
-            throw new NotValidEmailException(constraintNicknameViolations.iterator().next().getMessage());
+            throw new ObjectNotValidException(constraintNicknameViolations.iterator().next().getMessage());
         } else if (constraintPasswordViolations.size() > 0) {
-            throw new NotValidPassword(constraintPasswordViolations.iterator().next().getMessage());
+            throw new ObjectNotValidException(constraintPasswordViolations.iterator().next().getMessage());
         }
 
         List<User> result = serviceManager.findWithNamedQuery(User.FIND_BY_NICKNAME, QueryParameter.with("nickname", nickname).parameters());
         User u = result.get(0);
 
-        if (user == null) {
-            throw new UserNotExistException(UserNotExistException.defaultMessage);
+        if (u == null) {
+            throw new NotFoundException("User " + nickname);
         }
 
         return u;

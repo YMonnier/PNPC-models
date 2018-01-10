@@ -19,12 +19,14 @@ import java.util.Collection;
 @Entity
 @Table(name = "T_USER")
 @NamedQueries({
+        @NamedQuery(name = User.FIND_BY_TOKEN, query = "SELECT u FROM User u WHERE u.authToken = :token"),
         @NamedQuery(name = User.FIND_BY_NICKNAME, query = "SELECT u FROM User u WHERE u.nickname = :nickname"),
         @NamedQuery(name = User.FIND_ALL, query = "SELECT u FROM User u")
 })
 @Data
 public class User {
 
+    public static final String FIND_BY_TOKEN = "User.findByToken";
     public static final String FIND_BY_NICKNAME = "User.findByNickname";
     public static final String FIND_ALL = "User.findAll";
 
@@ -64,7 +66,7 @@ public class User {
         this.nickname = builder.nickname;
         this.email = builder.email;
         this.phoneNumber = builder.phoneNumber;
-        this.mdp = builder.password;
+        this.mdp = builder.mdp;
         this.passages = new ArrayList<>();
     }
 
@@ -72,7 +74,7 @@ public class User {
         private String nickname;
         private String email;
         private String phoneNumber;
-        private String password;
+        private String mdp;
 
         public User build() {
             return new User(this);
@@ -93,8 +95,8 @@ public class User {
             return this;
         }
 
-        public Builder setPassword(String password) {
-            this.password = password;
+        public Builder setMdp(String mdp) {
+            this.mdp = mdp;
             return this;
         }
     }

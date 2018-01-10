@@ -2,6 +2,7 @@ package fr.pnpc.project.models.ejb;
 
 import fr.pnpc.project.models.dao.CrudService;
 import fr.pnpc.project.models.dao.QueryParameter;
+import fr.pnpc.project.models.exceptions.LoginNotAllowException;
 import fr.pnpc.project.models.exceptions.NotFoundException;
 import fr.pnpc.project.models.exceptions.ObjectNotValidException;
 import fr.pnpc.project.models.model.User;
@@ -20,6 +21,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
 @Data
 @Stateless
@@ -54,10 +56,10 @@ public class UserManager extends ValidatorManager<User> implements Serializable 
     public User login(String nickname, String password) throws Exception {
         User user = new User.Builder()
                 .setNickname(nickname)
-                .setPassword(password)
+                .setMdp(password)
                 .build();
-        Set<ConstraintViolation<User>> constraintNicknameViolations = validator.validateProperty(user, "email");
-        Set<ConstraintViolation<User>> constraintPasswordViolations = validator.validateProperty(user, "password");
+        Set<ConstraintViolation<User>> constraintNicknameViolations = validator.validateProperty(user, "nickname");
+        Set<ConstraintViolation<User>> constraintPasswordViolations = validator.validateProperty(user, "mdp");
         if (constraintNicknameViolations.size() > 0) {
             throw new ObjectNotValidException(constraintNicknameViolations.iterator().next().getMessage());
         } else if (constraintPasswordViolations.size() > 0) {
@@ -70,13 +72,17 @@ public class UserManager extends ValidatorManager<User> implements Serializable 
         if (u == null) {
             throw new NotFoundException("User " + nickname);
         }
-
         if (BCrypt.checkpw(password, u.getMdp())) {
             try {
-                TokenUtil.generate(u);
+                u.setAuthToken(TokenUtil.generate(u));
+                serviceManager.update(u);
             } catch (UnsupportedEncodingException e) {
                 throw new Exception(e.getMessage());
             }
+        } else {
+            u.setAuthToken(null);
+            serviceManager.update(u);
+            throw new LoginNotAllowException();
         }
 
         return u;

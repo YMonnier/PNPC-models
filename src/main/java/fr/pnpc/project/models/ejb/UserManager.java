@@ -59,7 +59,7 @@ public class UserManager extends ValidatorManager<User> implements Serializable 
         List<User> result = serviceManager.findWithNamedQuery(User.FIND_BY_NICKNAME, QueryParameter.with("nickname", nickname).parameters());
         User u = result.get(0);
 
-        if (user != null) {
+        if (user == null) {
             throw new UserNotExistException(UserNotExistException.defaultMessage);
         }
 

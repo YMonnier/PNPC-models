@@ -176,7 +176,7 @@ public class UserTest {
 
     @Test
     void passwordNotNullFailedTest() {
-        user.setPassword(null);
+        user.setMdp(null);
         Set<ConstraintViolation<User>> constraintViolations =
                 validator.validate(user);
 
@@ -186,7 +186,7 @@ public class UserTest {
 
     @Test
     void passwordToSmallTest() {
-        user.setPassword("abcdZD");
+        user.setMdp("abcdZD");
         Set<ConstraintViolation<User>> constraintViolations =
                 validator.validate(user);
 

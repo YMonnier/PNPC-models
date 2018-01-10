@@ -49,7 +49,7 @@ public class PassageManager extends ValidatorManager<Passage> implements Seriali
     public List getPassagesByUserId(int id) throws PassageNotExistException {
         List<Passage> passages = serviceManager.findWithNamedQuery(Passage.FIND_BY_USER_ID, QueryParameter.with("id", id).parameters());
 
-        if (passages != null) {
+        if (passages == null) {
             throw new PassageNotExistException(UserNotExistException.defaultMessage);
         }
 
@@ -60,7 +60,7 @@ public class PassageManager extends ValidatorManager<Passage> implements Seriali
     public Passage getPassage(int userId, int passageId) throws PassageNotExistException {
         List<Passage> passages = serviceManager.findWithNamedQuery(Passage.FIND_BY_ID, QueryParameter.with("passageId", passageId).and("userId", userId).parameters());
 
-        if (passages != null) {
+        if (passages == null) {
             throw new PassageNotExistException(UserNotExistException.defaultMessage);
         }
 

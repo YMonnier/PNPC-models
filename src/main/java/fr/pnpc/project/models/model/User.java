@@ -45,7 +45,7 @@ public class User {
 
     @NotNull(message = "Password should not be null.")
     @Length(min = 8, message = "Password must have 8 characters.")
-    private String password;
+    private String mdp;
 
     private String authToken;
     private String deviceToken;
@@ -56,13 +56,17 @@ public class User {
 
     public User() {
         this.passages = new ArrayList<>();
+        this.nickname = "Empty nickname";
+        this.mdp = "abcdabcd123";
+        this.phoneNumber = "1213121314";
+        this.email = "default@default.com";
     }
 
     private User(Builder builder) {
         this.nickname = builder.nickname;
         this.email = builder.email;
         this.phoneNumber = builder.phoneNumber;
-        this.password = builder.password;
+        this.mdp = builder.password;
         this.passages = new ArrayList<>();
     }
 

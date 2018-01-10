@@ -34,4 +34,8 @@ public class Passage {
 
     public Passage(){}
 
+    public Passage(User user, Waypoint waypoint) {
+        this.user = user;
+        this.waypoint = waypoint;
+    }
 }

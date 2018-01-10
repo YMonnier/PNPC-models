@@ -1,0 +1,213 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- ADAPTER LES PROPRIETES SUIVANTES -->
+    <properties>
+        <!-- Le nom court du projet a utiliser pour github -->
+        <projectShortName>PNPC-models</projectShortName>
+        <github.account>ymonnier</github.account>
+        <!-- utln login for nexus (maven and docker ) repository on lsis -->
+        <lsisnexus.login>ysee-monnier@etud.univ-tln.fr</lsisnexus.login>
+        <!-- the default Main class -->
+        <app.main.class>fr.pnpc.project.models.App</app.main.class>
+    </properties>
+    <!-- ADAPTER LES PROPRIETES SUIVANTES -->
+
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>bintray-dptinfoutln-public</id>
+            <name>bintray</name>
+            <url>https://dl.bintray.com/dptinfoutln/public</url>
+
+        </repository>
+
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>bintray-ymonnier-pnpc</id>
+            <name>bintray</name>
+            <url>https://dl.bintray.com/ymonnier/pnpc</url>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>bintray-dptinfoutln-public</id>
+            <name>bintray-plugins</name>
+            <url>https://dl.bintray.com/dptinfoutln/public</url>
+        </pluginRepository>
+
+        <pluginRepository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>bintray-ymonnier-pnpc</id>
+            <name>bintray-plugins</name>
+            <url>https://dl.bintray.com/ymonnier/pnpc</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <parent>
+        <groupId>fr.univtln.bruno.pom</groupId>
+        <artifactId>common-pom</artifactId>
+        <version>0.7.30-dev-171</version>
+    </parent>
+
+    <!-- ADAPTER les coordonnées -->
+    <groupId>fr.pnpc.project.models</groupId>
+    <artifactId>PNPC-Models</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+    <!-- ADAPTER les coordonnées -->
+
+    <!-- ADAPTER les métadonnées -->
+    <name>pnpc-models</name>
+    <description />
+    <url>https://${github.account}.github.io/pnpc-models/</url>
+    <inceptionYear>2017</inceptionYear>
+
+    <organization>
+        <name>Université de Toulon</name>
+        <url>http://www.univ-tln.fr</url>
+    </organization>
+
+    <profiles>
+        <profile>
+            <id>stage-devel-bintray</id>
+            <distributionManagement>
+                <repository>
+                    <id>bintray-ymonnier-pnpc</id>
+                    <name>ymonnier-pnpc</name>
+                    <url>https://api.bintray.com/maven/ymonnier/pnpc/${projectShortName}/;publish=1</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+    </profiles>
+
+    <developers>
+        <developer>
+            <id>ymonnier</id>
+            <name>Ysee Monnier</name>
+            <email>yseemonnier@gmail.com</email>
+            <url>www.yseemonnier.com</url>
+            <roles>
+                <role>mobile developer</role>
+                <role>web developer</role>
+            </roles>
+            <timezone>Europe/Paris</timezone>
+        </developer>
+    </developers>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <configuration>
+                    <filters>
+                        <filter>
+                            <artifact>fr.pnpc.project.models:App</artifact>
+                            <includes>
+                                <include>**</include>
+                            </includes>
+                        </filter>
+                    </filters>
+                </configuration>
+            </plugin>
+        </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- Only required to run tests in an IntelliJ IDEA that bundles an older version -->
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>2.11.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- ******************** -->
+        <!-- Project Dependencies -->
+        <!-- ******************** -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.16</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- JEE -->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>7.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+        </dependency>
+
+        <!-- Hibernate For connection pooling -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-c3p0</artifactId>
+        </dependency>
+
+        <!-- Bean validation -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+
+        <!-- Use for Validation Unit Tests-->
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>javax.el-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>javax.el</artifactId>
+            <version>2.2.4</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>

@@ -44,6 +44,9 @@ public class UserManager extends ValidatorManager<User> implements Serializable 
             throw new ObjectNotValidException(errors);
         }
 
+        String hashedPassword = BCrypt.hashpw(user.getMdp(), BCrypt.gensalt());
+        user.setMdp(hashedPassword);
+
         return serviceManager.create(user);
     }
 

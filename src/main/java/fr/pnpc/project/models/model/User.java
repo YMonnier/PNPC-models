@@ -1,5 +1,6 @@
 package fr.pnpc.project.models.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.pnpc.project.models.validation.PhoneNumber;
 import fr.pnpc.project.models.validation.PhoneNumberValidator;
 import lombok.Data;
@@ -45,6 +46,7 @@ public class User {
 
     @NotNull(message = "Password should not be null.")
     @Length(min = 8, message = "Password must have 8 characters.")
+    @JsonIgnore
     private String mdp;
 
     private String authToken;

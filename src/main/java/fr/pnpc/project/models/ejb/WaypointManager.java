@@ -1,6 +1,7 @@
 package fr.pnpc.project.models.ejb;
 
 import fr.pnpc.project.models.dao.CrudService;
+import fr.pnpc.project.models.exceptions.NotFoundException;
 import fr.pnpc.project.models.exceptions.ObjectNotValidException;
 import fr.pnpc.project.models.model.Waypoint;
 import fr.pnpc.project.models.util.ErrorMessages;
@@ -50,11 +51,16 @@ public class WaypointManager extends ValidatorManager<Waypoint> implements Seria
         return serviceManager.findAll(Waypoint.class);
     }
 
-    public Waypoint getById(int id) {
-        return serviceManager.find(Waypoint.class, id);
+    public Waypoint getById(int id) throws NotFoundException {
+        Waypoint w = serviceManager.find(Waypoint.class, id);
+        if (w == null) {
+            throw new NotFoundException("Waypoint " + id);
+        }
+        return w;
     }
 
-    public void delete(int id) {
+    public void delete(int id) throws NotFoundException {
+        getById(id);
         serviceManager.delete(Waypoint.class, id);
     }
 

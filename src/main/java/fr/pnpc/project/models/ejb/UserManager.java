@@ -5,14 +5,18 @@ import fr.pnpc.project.models.dao.QueryParameter;
 import fr.pnpc.project.models.exceptions.*;
 import fr.pnpc.project.models.model.User;
 import fr.pnpc.project.models.util.ErrorMessages;
+import fr.pnpc.project.models.util.TokenUtil;
 import fr.pnpc.project.models.util.ValidatorManager;
 import lombok.Data;
+import org.mindrot.jbcrypt.BCrypt;
+import sun.tools.jstat.Token;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolation;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -44,7 +48,7 @@ public class UserManager extends ValidatorManager<User> implements Serializable 
     }
 
     @Transactional(rollbackOn = {ObjectNotValidException.class, NotFoundException.class})
-    public User login(String nickname, String password) throws ObjectNotValidException, NotFoundException {
+    public User login(String nickname, String password) throws Exception {
         User user = new User.Builder()
                 .setNickname(nickname)
                 .setPassword(password)
@@ -62,6 +66,14 @@ public class UserManager extends ValidatorManager<User> implements Serializable 
 
         if (u == null) {
             throw new NotFoundException("User " + nickname);
+        }
+
+        if (BCrypt.checkpw(password, u.getMdp())) {
+            try {
+                TokenUtil.generate(u);
+            } catch (UnsupportedEncodingException e) {
+                throw new Exception(e.getMessage());
+            }
         }
 
         return u;

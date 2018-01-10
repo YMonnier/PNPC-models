@@ -4,6 +4,7 @@ import fr.pnpc.project.models.dao.CrudService;
 import fr.pnpc.project.models.dao.QueryParameter;
 import fr.pnpc.project.models.exceptions.*;
 import fr.pnpc.project.models.model.User;
+import fr.pnpc.project.models.util.ErrorMessages;
 import fr.pnpc.project.models.util.ValidatorManager;
 import lombok.Data;
 
@@ -30,7 +31,7 @@ public class UserManager extends ValidatorManager<User> implements Serializable 
     @Transactional(rollbackOn = {Exception.class})
     public User register(User user) throws Exception {
         if (user == null) {
-            throw new NullObjectException(NullObjectException.defaultMessage);
+            throw new ObjectNotValidException(ErrorMessages.NULL_OBJECT);
         }
         Set<ConstraintViolation<User>> constraintViolations = constraintViolations(user);
         if (constraintViolations.size() > 0) {

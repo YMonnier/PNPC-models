@@ -6,13 +6,14 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
 @Table(name = "T_WAYPOINT")
 @Data
-public class Waypoint {
+public class Waypoint implements Serializable {
 
     @Id
     @GeneratedValue

@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -24,7 +25,7 @@ import java.util.Collection;
         @NamedQuery(name = User.FIND_ALL, query = "SELECT u FROM User u")
 })
 @Data
-public class User {
+public class User implements Serializable {
 
     public static final String FIND_BY_TOKEN = "User.findByToken";
     public static final String FIND_BY_NICKNAME = "User.findByNickname";

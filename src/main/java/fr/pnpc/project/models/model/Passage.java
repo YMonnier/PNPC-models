@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * Created by stephen on 27/10/17.
@@ -17,7 +18,7 @@ import javax.validation.constraints.NotNull;
 })
 
 @Data
-public class Passage {
+public class Passage implements Serializable {
 
     public final static String FIND_BY_USER_ID = "FIND_PASSAGES_BY_USER_ID";
     public final static String FIND_BY_ID = "FIND_PASSAGES_BY_ID";

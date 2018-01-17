@@ -31,10 +31,27 @@ public class UserManager extends ValidatorManager<User> implements Serializable 
     @Inject
     CrudService<User> serviceManager;
 
+    /**
+     * Default constructor
+     * Is require when the constructor is instanciate during
+     * the injection
+     */
     public UserManager() {
         super();
     }
 
+    /**
+     * Function register a user in database.
+     * Need a valid user verify by ConstraintValidation.
+     * Nickname need to be unique.
+     * The password is cipher with BCrypt librairie.
+     *
+     * If the function throws a Exception, a rollback is trigger in database.
+     *
+     * @param user User to be register.
+     * @return User object with his identifier.
+     * @throws ObjectNotValidException
+     */
     @Transactional(rollbackOn = {Exception.class})
     public User register(User user) throws ObjectNotValidException {
         if (user == null) {
@@ -53,6 +70,18 @@ public class UserManager extends ValidatorManager<User> implements Serializable 
         return serviceManager.create(user);
     }
 
+    /**
+     * Function login user with his nickname and his cipher password.
+     * Nickname and password are verify with ConstraintValidation.
+     * A token is generate with java-jwt librairie.
+     *
+     * If the function throws a Exception, a rollback is trigger in database.
+     *
+     * @param nickname User nickname.
+     * @param password User password.
+     * @return User object.
+     * @throws Exception
+     */
     @Transactional(rollbackOn = {ObjectNotValidException.class, NotFoundException.class})
     public User login(String nickname, String password) throws Exception {
         User user = new User.Builder()
@@ -89,6 +118,15 @@ public class UserManager extends ValidatorManager<User> implements Serializable 
         return u;
     }
 
+    /**
+     * Get all user informations by his identifier.
+     *
+     * If the function throws a Exception, a rollback is trigger in database.
+     *
+     * @param id User identifier.
+     * @return User object.
+     * @throws NotFoundException
+     */
     public User getById(long id) throws NotFoundException {
         User w = (User)this.serviceManager.find(User.class, id);
         if (w == null) {

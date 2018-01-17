@@ -33,7 +33,7 @@ public class UserManager extends ValidatorManager<User> implements Serializable 
 
     /**
      * Default constructor
-     * Is require when the constructor is instanciate during
+     * Is require when the constructor is instanciated during
      * the injection
      */
     public UserManager() {
@@ -42,11 +42,11 @@ public class UserManager extends ValidatorManager<User> implements Serializable 
 
     /**
      * Function register a user in database.
-     * Need a valid user verify by ConstraintValidation.
+     * Need a valid user checked by `ConstraintValidation`.
      * Nickname need to be unique.
-     * The password is cipher with BCrypt librairie.
+     * The password is cipher with BCrypt library.
      *
-     * If the function throws a Exception, a rollback is trigger in database.
+     * If the function throws a Exception, a rollback is trigged in database.
      *
      * @param user User to be register.
      * @return User object with his identifier.
@@ -72,10 +72,10 @@ public class UserManager extends ValidatorManager<User> implements Serializable 
 
     /**
      * Function login user with his nickname and his cipher password.
-     * Nickname and password are verify with ConstraintValidation.
-     * A token is generate with java-jwt librairie.
+     * Nickname and password are checked with `ConstraintValidation`.
+     * A token is generated with java-jwt library.
      *
-     * If the function throws a Exception, a rollback is trigger in database.
+     * If the function throws a Exception, a rollback is trigged in database.
      *
      * @param nickname User nickname.
      * @param password User password.
@@ -119,9 +119,9 @@ public class UserManager extends ValidatorManager<User> implements Serializable 
     }
 
     /**
-     * Get all user informations by his identifier.
+     * Get all user information by his identifier.
      *
-     * If the function throws a Exception, a rollback is trigger in database.
+     * If the function throws a Exception, a rollback is trigged in database.
      *
      * @param id User identifier.
      * @return User object.

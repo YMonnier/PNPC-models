@@ -75,10 +75,10 @@ public class CrudServiceBean<T> implements CrudService<T> {
     }
 
     /**
-     * Create a QueryBuilder for a named query.
+     * Create a QueryParameter for a named query.
      *
      * @param namedQueryName The string query name.
-     * @return QueryBuilder object. @see QueryBuilder
+     * @return QueryParameter object. @see QueryBuilder
      */
     @Override
     public List<T> findWithNamedQuery(String namedQueryName) {
@@ -86,12 +86,12 @@ public class CrudServiceBean<T> implements CrudService<T> {
     }
 
     /**
-     * Create a QueryBuilder for a named query.
+     * Create a QueryParameter for a named query.
      * Function can get parameters a Map for all parameters
      *
      * @param namedQueryName The string query name.
      * @param parameters Parameters for the query.
-     * @return QueryBuilder object. @see QueryBuilder
+     * @return QueryParameter object. @see QueryBuilder
      */
     @Override
     public List<T> findWithNamedQuery(String namedQueryName, Map parameters) {
@@ -99,11 +99,11 @@ public class CrudServiceBean<T> implements CrudService<T> {
     }
 
     /**
-     * Create a QueryBuilder for a native query with result limit.
+     * Create a QueryParameter for a native query with result limit.
      *
      * @param queryName The string query name.
      * @param resultLimit The result limit the query return.
-     * @return QueryBuilder object. @see QueryBuilder
+     * @return QueryParameter object. @see QueryBuilder
      */
     @Override
     public List<T> findWithNamedQuery(String queryName, int resultLimit) {
@@ -113,12 +113,12 @@ public class CrudServiceBean<T> implements CrudService<T> {
     }
 
     /**
-     * Create a QueryBuilder for a native query.
+     * Create a QueryParameter for a native query.
      * They return all entities persist in table
      *
      * @param sql The string query name.
      * @param type Type of object to return.
-     * @return QueryBuilder object. @see QueryBuilder
+     * @return QueryParameter object. @see QueryBuilder
      */
     @Override
     public List<T> findByNativeQuery(String sql, Class type) {
@@ -126,7 +126,7 @@ public class CrudServiceBean<T> implements CrudService<T> {
     }
 
     /**
-     * Create a QueryBuilder for a named query with result limit.
+     * Create a QueryParameter for a named query with result limit.
      * Function can get parameters a Map for all parameters.
      *
      * @param namedQueryName The string query name.

@@ -26,7 +26,7 @@ public class PassageManager extends ValidatorManager<Passage> implements Seriali
 
     /**
      * Default constructor
-     * Is require when the constructor is instanciate during
+     * Is require when the constructor is instanciated during
      * the injection
      */
     public PassageManager() {
@@ -35,8 +35,8 @@ public class PassageManager extends ValidatorManager<Passage> implements Seriali
 
     /**
      * Persist a Passage object in database
-     * All parameters of passage are verify by ConstrainteViolation object.
-     * If the function throws a Exception, a rollback is trigger in database.
+     * All parameters of passage are verify by `ConstraintViolation` object.
+     * If the function throws a Exception, a rollback is trigged in database.
      * @param passage Passage object.
      * @return Passage passage object.
      * @throws ObjectNotValidException
@@ -59,7 +59,7 @@ public class PassageManager extends ValidatorManager<Passage> implements Seriali
 
     /**
      * Return all passages by a user identifier.
-     * If the function throws a Exception, a rollback is trigger in database.
+     * If the function throws a Exception, a rollback is trigged in database.
      *
      * @param id User identifier.
      * @return List Passage object.
@@ -77,9 +77,9 @@ public class PassageManager extends ValidatorManager<Passage> implements Seriali
     }
 
     /**
-     * Return a Passage object who match with the identifer of passage
+     * Return a Passage object who match with the identifier of passage
      * and the identifier of user.
-     * If the function throws a Exception, a rollback is trigger in database.
+     * If the function throws a Exception, a rollback is trigged in database.
      *
      * @param userId User identifier.
      * @param passageId Passage identifier.

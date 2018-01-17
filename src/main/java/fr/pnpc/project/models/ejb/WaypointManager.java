@@ -27,10 +27,25 @@ public class WaypointManager extends ValidatorManager<Waypoint> implements Seria
     @Inject
     CrudService<Waypoint> serviceManager;
 
+    /**
+     * Default constructor
+     * Is require when the constructor is instanciated during
+     * the injection
+     */
     public WaypointManager() {
         super();
     }
 
+    /**
+     * Persist a Waypoint object in database.
+     * Need a valid waypoint checked by `ConstraintValidation`.
+     *
+     * If the function throws a Exception, a rollback is trigged in database.
+     *
+     * @param waypoint Waypoint object.
+     * @return Waypoint with database identifier.
+     * @throws ObjectNotValidException
+     */
     @Transactional(rollbackOn = {ObjectNotValidException.class})
     public Waypoint create(Waypoint waypoint) throws ObjectNotValidException {
         if (waypoint == null) {
@@ -46,6 +61,11 @@ public class WaypointManager extends ValidatorManager<Waypoint> implements Seria
         return serviceManager.create(waypoint);
     }
 
+    /**
+     * Get all waypoint in database.
+     *
+     * @return List of waypoint object.
+     */
     public List getAll() {
         return serviceManager.findAll(Waypoint.class);
     }
@@ -58,11 +78,27 @@ public class WaypointManager extends ValidatorManager<Waypoint> implements Seria
         return w;
     }
 
+    /**
+     * Delete a waypoint object by identifier.
+     *
+     * @param id Waypoint identifier.
+     * @throws NotFoundException
+     */
     public void delete(long id) throws NotFoundException {
         getById(id);
         serviceManager.delete(Waypoint.class, id);
     }
 
+    /**
+     * Update a waypoint parameters.
+     * Need a valid newWaypoint checked by `ConstraintValidation`.
+     *
+     * If the function throws a Exception, a rollback is trigged in database.
+     *
+     * @param newWaypoint Waypoint object.
+     * @return Waypoint updated.
+     * @throws ObjectNotValidException
+     */
     @Transactional(rollbackOn = {ObjectNotValidException.class})
     public Waypoint update(Waypoint newWaypoint) throws ObjectNotValidException {
         if (newWaypoint == null) {

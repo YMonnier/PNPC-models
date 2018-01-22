@@ -12,8 +12,17 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "T_WAYPOINT")
+@NamedQueries({
+        @NamedQuery(name = Waypoint.FIND_BY_BEACONID, query = "SELECT w FROM Waypoint w WHERE w.beaconID = :beaconId")
+})
 @Data
 public class Waypoint implements Serializable {
+
+    /**
+     * Name of the named query to find all parameters of a user
+     * with his token passed as a parameter.
+     */
+    public static final String FIND_BY_BEACONID = "Waypoint.findByBeaconId";
 
     /**
      * Waypoint identifier.

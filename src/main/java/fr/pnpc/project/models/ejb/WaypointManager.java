@@ -1,8 +1,10 @@
 package fr.pnpc.project.models.ejb;
 
 import fr.pnpc.project.models.dao.CrudService;
+import fr.pnpc.project.models.dao.QueryParameter;
 import fr.pnpc.project.models.exceptions.NotFoundException;
 import fr.pnpc.project.models.exceptions.ObjectNotValidException;
+import fr.pnpc.project.models.model.User;
 import fr.pnpc.project.models.model.Waypoint;
 import fr.pnpc.project.models.util.ErrorMessages;
 import fr.pnpc.project.models.util.ValidatorManager;
@@ -70,11 +72,14 @@ public class WaypointManager extends ValidatorManager<Waypoint> implements Seria
         return serviceManager.findAll(Waypoint.class);
     }
 
-    public Waypoint getById(long id) throws NotFoundException {
-        Waypoint w = serviceManager.find(Waypoint.class, id);
+    public Waypoint getById(String beaconId) throws NotFoundException {
+        List<Waypoint> result = serviceManager.findWithNamedQuery(Waypoint.FIND_BY_BEACONID, QueryParameter.with("beaconId", beaconId).parameters());
+        Waypoint w = result.get(0);
+
         if (w == null) {
-            throw new NotFoundException("Waypoint " + id);
+            throw new NotFoundException("Waypoint " + beaconId);
         }
+
         return w;
     }
 
@@ -85,7 +90,11 @@ public class WaypointManager extends ValidatorManager<Waypoint> implements Seria
      * @throws NotFoundException
      */
     public void delete(long id) throws NotFoundException {
-        getById(id);
+        Waypoint w = serviceManager.find(Waypoint.class, id);
+
+        if (w == null) {
+            throw new NotFoundException("Waypoint " + id);
+        }
         serviceManager.delete(Waypoint.class, id);
     }
 

@@ -13,7 +13,7 @@ import java.util.Collection;
 @Entity
 @Table(name = "T_WAYPOINT")
 @NamedQueries({
-        @NamedQuery(name = Waypoint.FIND_BY_BEACONID, query = "SELECT w FROM Waypoint w WHERE w.beaconID = :beaconId")
+        @NamedQuery(name = Waypoint.FIND_BY_BEACONID, query = "SELECT w FROM Waypoint w WHERE w.beaconId = :beaconId")
 })
 @Data
 public class Waypoint implements Serializable {

@@ -197,6 +197,20 @@
             <artifactId>hibernate-validator</artifactId>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.mindrot/jbcrypt -->
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.3m</version>
+        </dependency>
+
+        <!-- JWT - JSON Web Token -->
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
         <!-- Use for Validation Unit Tests-->
         <dependency>
             <groupId>javax.el</groupId>

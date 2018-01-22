@@ -57,7 +57,7 @@ public class UserTest {
                 .setEmail(DEFAULT_EMAIL)
                 .setNickname(DEFAULT_NICKNAME)
                 .setPhoneNumber(DEFAULT_PHONE_NUMBER)
-                .setPassword(DEFAULT_PASSWORD)
+                .setMdp(DEFAULT_PASSWORD)
                 .build();
     }
 

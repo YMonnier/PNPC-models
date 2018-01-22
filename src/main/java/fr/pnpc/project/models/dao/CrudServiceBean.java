@@ -18,9 +18,19 @@ public class CrudServiceBean<T> implements CrudService<T> {
     @PersistenceContext(unitName = "pnpc_db_unit")
     EntityManager em;
 
-    public CrudServiceBean() {
-    }
+    /**
+     * Default constructor
+     * Is require when the constructor is instanciate during
+     * the injection
+     */
+    public CrudServiceBean() {}
 
+    /**
+     * Save an entity into the database.
+     *
+     * @param t Entity object.
+     * @return The entity updated(@ID).
+     */
     @Override
     public T create(T t) {
         this.em.persist(t);
@@ -29,32 +39,72 @@ public class CrudServiceBean<T> implements CrudService<T> {
         return t;
     }
 
+    /**
+     * Find an entity with his type and his identifier
+     *
+     * @param type Entity type object
+     * @param id Entity identifier
+     * @return
+     */
     @Override
     @SuppressWarnings("unchecked")
     public T find(Class type, Object id) {
         return (T) this.em.find(type, id);
     }
 
+    /**
+     * Delete an entity into the database.
+     *
+     * @param type Entity type object.
+     * @param id Entity identifier
+     */
     public void delete(Class type, Object id) {
         Object ref = this.em.getReference(type, id);
         this.em.remove(ref);
     }
 
+    /**
+     * Update an entity into the database.
+     *
+     * @param t Entity object.
+     * @return The entity updated.
+     */
     @Override
     public T update(T t) {
         return (T) this.em.merge(t);
     }
 
+    /**
+     * Create a QueryParameter for a named query.
+     *
+     * @param namedQueryName The string query name.
+     * @return QueryParameter object. @see QueryBuilder
+     */
     @Override
     public List<T> findWithNamedQuery(String namedQueryName) {
         return this.em.createNamedQuery(namedQueryName).getResultList();
     }
 
+    /**
+     * Create a QueryParameter for a named query.
+     * Function can get parameters a Map for all parameters
+     *
+     * @param namedQueryName The string query name.
+     * @param parameters Parameters for the query.
+     * @return QueryParameter object. @see QueryBuilder
+     */
     @Override
     public List<T> findWithNamedQuery(String namedQueryName, Map parameters) {
         return findWithNamedQuery(namedQueryName, parameters, 0);
     }
 
+    /**
+     * Create a QueryParameter for a native query with result limit.
+     *
+     * @param queryName The string query name.
+     * @param resultLimit The result limit the query return.
+     * @return QueryParameter object. @see QueryBuilder
+     */
     @Override
     public List<T> findWithNamedQuery(String queryName, int resultLimit) {
         return this.em.createNamedQuery(queryName).
@@ -62,11 +112,28 @@ public class CrudServiceBean<T> implements CrudService<T> {
                 getResultList();
     }
 
+    /**
+     * Create a QueryParameter for a native query.
+     * They return all entities persist in table
+     *
+     * @param sql The string query name.
+     * @param type Type of object to return.
+     * @return QueryParameter object. @see QueryBuilder
+     */
     @Override
     public List<T> findByNativeQuery(String sql, Class type) {
         return this.em.createNativeQuery(sql, type).getResultList();
     }
 
+    /**
+     * Create a QueryParameter for a named query with result limit.
+     * Function can get parameters a Map for all parameters.
+     *
+     * @param namedQueryName The string query name.
+     * @param parameters Parameters for the query.
+     * @param resultLimit The result limit the query return.
+     * @return List object list.
+     */
     @Override
     public List<T> findWithNamedQuery(String namedQueryName, Map parameters, int resultLimit) {
         Set<Map.Entry<String, Object>> rawParameters = parameters.entrySet();
@@ -79,6 +146,12 @@ public class CrudServiceBean<T> implements CrudService<T> {
         return query.getResultList();
     }
 
+    /**
+     * Return all entities presisted in target table.
+     *
+     * @param type Type of object to return.
+     * @return List object list.
+     */
     @Override
     public List findAll(Class type) {
         CriteriaBuilder cb = em.getCriteriaBuilder();

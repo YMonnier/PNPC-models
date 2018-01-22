@@ -4,7 +4,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 public class LongitudeValidator
-        implements ConstraintValidator<Longitude, Long> {
+        implements ConstraintValidator<Longitude, Double> {
 
     public static final int min = -180;
     public static final int max = 180;
@@ -15,7 +15,7 @@ public class LongitudeValidator
     }
 
     @Override
-    public boolean isValid(Long l, ConstraintValidatorContext constraintValidatorContext) {
+    public boolean isValid(Double l, ConstraintValidatorContext constraintValidatorContext) {
         if (l == null)
             return true;
         return l >= min && l <= max;

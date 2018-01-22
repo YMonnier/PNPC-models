@@ -6,36 +6,69 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
 @Table(name = "T_WAYPOINT")
+@NamedQueries({
+        @NamedQuery(name = Waypoint.FIND_BY_BEACONID, query = "SELECT w FROM Waypoint w WHERE w.beaconId = :beaconId")
+})
 @Data
-public class Waypoint {
+public class Waypoint implements Serializable {
 
+    /**
+     * Name of the named query to find all parameters of a user
+     * with his token passed as a parameter.
+     */
+    public static final String FIND_BY_BEACONID = "Waypoint.findByBeaconId";
+
+    /**
+     * Waypoint identifier.
+     */
     @Id
     @GeneratedValue
     private long id;
 
+    /**
+     * Beacon identifier of current waypoint.
+     * Identifier for identify beacon.
+     */
     private String beaconId;
 
+    /**
+     * Latitude of current waypoint.
+     */
     @NotNull(message = "Latitude should not be null.")
     @Latitude
-    private Long latitude;
+    private Double latitude;
 
+    /**
+     * Longitude of current waypoint.
+     */
     @NotNull(message = "Longitude should not be null.")
     @Longitude
-    private Long longitude;
+    private Double longitude;
 
-    @NotNull(message = "Passage collections should not be null")
+    /**
+     * The list of all the waypoints of the current waypoint.
+     */
     @OneToMany(mappedBy = "waypoint", cascade = CascadeType.PERSIST)
     private Collection<Passage> passages;
 
+    /**
+     * Default constructor
+     */
     public Waypoint() {
-
+        this.passages = new ArrayList<>();
     }
 
+    /**
+     * Constructor
+     * To create a builder. @see `Builder`
+     * @param builder builder Builder object.
+     */
     private Waypoint(Builder builder) {
         this.latitude = builder.latitude;
         this.longitude = builder.longitude;
@@ -43,29 +76,19 @@ public class Waypoint {
     }
 
     public static class Builder {
-        private Long latitude;
-        private Long longitude;
+        private Double latitude;
+        private Double longitude;
 
         public Waypoint build() {
             return new Waypoint(this);
         }
 
-        public Builder setLatitude(long latitude) {
+        public Builder setLatitude(Double latitude) {
             this.latitude = latitude;
             return this;
         }
 
-        public Builder setLongitude(long longitude) {
-            this.longitude = longitude;
-            return this;
-        }
-
-        public Builder setLatitude(Long latitude) {
-            this.latitude = latitude;
-            return this;
-        }
-
-        public Builder setLongitude(Long longitude) {
+        public Builder setLongitude(Double longitude) {
             this.longitude = longitude;
             return this;
         }

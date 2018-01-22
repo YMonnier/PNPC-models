@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LatitudeValidator
-        implements ConstraintValidator<Latitude, Long> {
+        implements ConstraintValidator<Latitude, Double> {
 
     public static final int min = -90;
     public static final int max = 90;
@@ -17,7 +17,7 @@ public class LatitudeValidator
     }
 
     @Override
-    public boolean isValid(Long l, ConstraintValidatorContext constraintValidatorContext) {
+    public boolean isValid(Double l, ConstraintValidatorContext constraintValidatorContext) {
         if (l == null)
             return true;
         return l >= min && l <= max;

@@ -24,10 +24,25 @@ public class PassageManager extends ValidatorManager<Passage> implements Seriali
     @Inject
     CrudService<Passage> serviceManager;
 
+    /**
+     * Default constructor
+     * Is require when the constructor is instanciated during
+     * the injection
+     */
     public PassageManager() {
         super();
     }
 
+    /**
+     * Persist a Passage object in database
+     * All parameters of passage are verify by `ConstraintViolation` object.
+     *
+     * If the function throws a Exception, a rollback is trigged in database.
+     *
+     * @param passage Passage object.
+     * @return Passage passage object.
+     * @throws ObjectNotValidException
+     */
     @Transactional(rollbackOn = {ObjectNotValidException.class})
     public Passage create(Passage passage) throws ObjectNotValidException {
         if (passage == null) {
@@ -44,8 +59,17 @@ public class PassageManager extends ValidatorManager<Passage> implements Seriali
         return serviceManager.create(passage);
     }
 
+    /**
+     * Return all passages by a user identifier.
+     *
+     * If the function throws a Exception, a rollback is trigged in database.
+     *
+     * @param id User identifier.
+     * @return List Passage object.
+     * @throws NotFoundException
+     */
     @Transactional(rollbackOn = {NotFoundException.class})
-    public List getPassagesByUserId(int id) throws NotFoundException {
+    public List getPassagesByUserId(long id) throws NotFoundException {
         List<Passage> passages = serviceManager.findWithNamedQuery(Passage.FIND_BY_USER_ID, QueryParameter.with("id", id).parameters());
 
         if (passages == null) {
@@ -55,8 +79,19 @@ public class PassageManager extends ValidatorManager<Passage> implements Seriali
         return passages;
     }
 
+    /**
+     * Return a Passage object who match with the identifier of passage
+     * and the identifier of user.
+     *
+     * If the function throws a Exception, a rollback is trigged in database.
+     *
+     * @param userId User identifier.
+     * @param passageId Passage identifier.
+     * @return Passage object
+     * @throws NotFoundException
+     */
     @Transactional(rollbackOn = {NotFoundException.class})
-    public Passage getPassage(int userId, int passageId) throws NotFoundException {
+    public Passage getPassage(long userId, long passageId) throws NotFoundException {
         List<Passage> passages = serviceManager.findWithNamedQuery(Passage.FIND_BY_ID, QueryParameter.with("passageId", passageId).and("userId", userId).parameters());
 
         if (passages == null) {
